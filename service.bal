@@ -1,6 +1,8 @@
 import ballerinax/github;
 import ballerina/http;
 
+configurable string GitToken=?;
+
 type Repo record {
    int star;
    string name; 
@@ -8,13 +10,14 @@ type Repo record {
 ;
 # A service representing a network-accessible API
 # bound to port `9090`.
+# comment again 
  service / on new http:Listener(9090) {
 
     resource function get ReposTest(string name) returns Repo[]|error {
 
         github:Client githubEp = check new (config = {
             auth: {
-                token: "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"
+                token: "GitToken"
             }
     });
         stream<github:Repository, error?> getRepositoriesResponse = check githubEp->getRepositories();
